@@ -45,7 +45,9 @@ One example, retrieving the title of all the news in Hacker news:
 
 ## Installation
 
-leiningen
+leiningen and clojars:
+
+[apricot-soup "0.0.1-SNAPSHOT"]
 
 ## License
 
