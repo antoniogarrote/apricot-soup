@@ -1,6 +1,6 @@
 # apricot-soup
 
-A library trying to make easy to manipulate HTML documents.
+A library trying to ease the manipulation of HTML documents.
 This library is a wrapper around the JSoup Java library.
 
 One example, retrieving the title of all the news in Hacker news:
