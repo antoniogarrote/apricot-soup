@@ -44,3 +44,7 @@
 
 (deftest test-children
   (is (= " test" ($ "<div><span><a>test</a></span></div>" div (children) (children) (text)))))
+
+(deftest test-s-expressions
+  (is (= '([:div {} [[:div.other.test {:class "test other"} "hola"] [:ul {} [[:li {} "uno"] [:li#two {:id "two"} "dos"]]]]] [:div.other.test {:class "test other"} "hola"])
+         ($ "<div><div class='test other'>hola</div><ul><li>uno</li><li id='two'>dos</li></ul></div>" div (s-expressions)))))

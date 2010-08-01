@@ -51,7 +51,7 @@ One example: retrieving the title of all the news in Hacker news:
    [:ul {}
      [[:li {} "uno"]
       [:li#two {:id "two"} "dos"]]]]]
- [:divother.test {:class "test other"} "hola"])
+ [:div.other.test {:class "test other"} "hola"])
 
 ## Installation
 

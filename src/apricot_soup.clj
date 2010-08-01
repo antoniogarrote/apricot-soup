@@ -220,7 +220,7 @@
   ([node]
      (if (instance? Elements node)
        (map (fn [elem] (class-names elem)) node)
-       (set (.classNames node)))))
+       (set (filter #(not= "" %1) (.classNames node))))))
 
 (defn attributes
   "Returns a map with the attributes of a node"
@@ -244,7 +244,7 @@
              classes (vec (class-names node))
              children (.children node)
              check-id (fn [tn] (if (empty? tag-id) tn (str tn "#" tag-id)))
-             check-classes (fn [tn] (if (empty? classes) tn (str tn (join "." classes))))
+             check-classes (fn [tn] (if (empty? classes) tn (str tn "." (join "." classes))))
              name (-> tag-name
                       check-id check-classes keyword)]
          (if (> (count children) 0)
