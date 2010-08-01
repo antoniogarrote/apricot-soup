@@ -240,10 +240,10 @@
        (map s-expressions node)
        (let [tag-name (tagname node)
              tag-id (id node)
-             classes (class-names node)
+             classes (vec (class-names node))
              children (.children node)
              check-id (fn [tn] (if (empty? tag-id) tn (str tn "#" tag-id)))
-             check-classes (fn [tn] (if (empty? classes) tn (str tn (clojure.contrib.string/join "." classes))))
+             check-classes (fn [tn] (if (empty? classes) tn (str tn (clojure.string/join "." classes))))
              name (-> tag-name
                       check-id check-classes keyword)]
          (if (> (count children) 0)

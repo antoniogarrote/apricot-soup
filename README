@@ -57,7 +57,7 @@ One example: retrieving the title of all the news in Hacker news:
 
 leiningen and clojars:
 
-[apricot-soup "0.0.1-SNAPSHOT"]
+[apricot-soup "0.0.2-SNAPSHOT"]
 
 ## License
 
