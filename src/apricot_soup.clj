@@ -1,5 +1,6 @@
 (ns apricot-soup
-  (:use [clojure.java.io])
+  (:use [clojure.java.io]
+        [clojure.string :only [join]])
   (:import [org.jsoup Jsoup]
            [org.jsoup.select Elements]
            [org.jsoup.nodes Element Document]))
@@ -243,7 +244,7 @@
              classes (vec (class-names node))
              children (.children node)
              check-id (fn [tn] (if (empty? tag-id) tn (str tn "#" tag-id)))
-             check-classes (fn [tn] (if (empty? classes) tn (str tn (clojure.string/join "." classes))))
+             check-classes (fn [tn] (if (empty? classes) tn (str tn (join "." classes))))
              name (-> tag-name
                       check-id check-classes keyword)]
          (if (> (count children) 0)
