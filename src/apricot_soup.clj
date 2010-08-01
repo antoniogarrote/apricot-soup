@@ -102,7 +102,7 @@
   ([node]
      (if (instance? Elements node)
        (vec (map #(.id %1) node))
-       [(.id node)])))
+       (.id node))))
 
 (defn base-uri
   "Returns the URI of the current document"
@@ -206,3 +206,46 @@
                                       (not (.startsWith href (base-uri node)))))
                             node)]
        (to-elems filtered))))
+
+(defn tagname
+  "Returns the tagnanme of an element"
+  ([node]
+     (if (instance? Elements node)
+       (map (fn [elem] (.tagName elem)) node)
+       (.tagName node))))
+
+(defn class-names
+  "Returns a set with all the clases for an element"
+  ([node]
+     (if (instance? Elements node)
+       (map (fn [elem] (class-names elem)) node)
+       (set (.classNames node)))))
+
+(defn attributes
+  "Returns a map with the attributes of a node"
+  ([node]
+     (if (instance? Elements node)
+       (map (fn [elem] (attributes elem)) node)
+       (let [attributes (.asList (.attributes node))]
+         (reduce (fn [m attr]
+                   (let [key (keyword (.getKey attr))
+                         val (.getValue attr)]
+                     (assoc m key val)))
+                 {} attributes)))))
+
+(defn s-expressions
+  "transforms the wrapped elements into a list of s-expressions"
+  ([node]
+     (if (instance? Elements node)
+       (map s-expressions node)
+       (let [tag-name (tagname node)
+             tag-id (id node)
+             classes (class-names node)
+             children (.children node)
+             check-id (fn [tn] (if (empty? tag-id) tn (str tn "#" tag-id)))
+             check-classes (fn [tn] (if (empty? classes) tn (str tn (clojure.contrib.string/join "." classes))))
+             name (-> tag-name
+                      check-id check-classes keyword)]
+         (if (> (count children) 0)
+           [name (attributes node) (vec (map s-expressions children))]
+           [name (attributes node) (text node)])))))

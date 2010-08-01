@@ -1,16 +1,16 @@
 # apricot-soup
 
-A library trying to ease the manipulation of HTML documents.
+A library that makes easy the manipulation of HTML documents.
 This library is a wrapper around the JSoup Java library.
 
-One example, retrieving the title of all the news in Hacker news:
+One example: retrieving the title of all the news in Hacker news:
 
-($ "http://news.ycombinator.com" a (external-links) (text))
+($ "http://news.ycombinator.com" td.title a (map #(text %1)))
 
 
 ## Usage
 
-- Retrieving and parsing
+- Retrieval and parsing
 
 ($ "http://news.ycombinator.com")
 
@@ -42,6 +42,16 @@ One example, retrieving the title of all the news in Hacker news:
 ($ "<ul><li>item 1</li><li>item 2</li></ul><p>a paragraph</p>" li (add ($ "<a>hey</a>" a)) (add p) (text))
 ; gets " item 1 item 2 hey a paragraph"
 
+- Transforming an element into a set of S-Expressions
+
+($ "<div><div class='test other'>hola</div><ul><li>uno</li><li id='two'>dos</li></ul></div>" div (s-expressions))
+
+([:div {}
+  [[:divother.test {:class "test other"} "hola"]
+   [:ul {}
+     [[:li {} "uno"]
+      [:li#two {:id "two"} "dos"]]]]]
+ [:divother.test {:class "test other"} "hola"])
 
 ## Installation
 
