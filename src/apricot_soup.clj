@@ -23,24 +23,16 @@
           (swap! *docs-queue* pop)
           last-val))))
 
-(defn- from-url
-  "Retrieves HTML document form a URL"
-  ([uri]
-     (with-open [data (reader uri)]
-       (apply str (line-seq data)))))
-
-(defn- is-uri
+(defn- uri?
   "Checks if the provided string is a URI"
   ([uri-str]
-     (or (= 0 (.indexOf uri-str "http://"))
-         (= 0 (.indexOf uri-str "https://")))))
-
+   (not (nil? (re-find #"^(http|https|ftp|file)://.*" uri-str)))))
 
 (defn parse
   "Parses a new HTML document from a string"
   ([html-string]
-     (if (is-uri html-string)
-       (let  [content (from-url html-string)
+     (if (uri? html-string)
+       (let  [content (slurp html-string)
               doc (Jsoup/parse content)]
          (do (.setBaseUri doc html-string)
              doc))
