@@ -12,47 +12,47 @@ One example: retrieving the title of all the news in Hacker news:
 
 - Retrieval and parsing
 
-    ($ "http://news.ycombinator.com")
+        ($ "http://news.ycombinator.com")
 
 - Selecting DOM elements
   (all the available JSoup selectors can be found here:
   http://jsoup.org/apidocs/org/jsoup/select/Selector.html
 
-    ; equivalent
-    ($ "http://news.ycombinator.com" (search "tr")  (search "a"))
-    ($ "http://news.ycombinator.com" "tr" "a")
-    ($ "http://news.ycombinator.com" tr a)
-     
-    ; equivalent
-    ($ "http://www.google.com" (search "#footer"))
-    ($ "http://www.google.com" "#footer")
-    ($ "http://www.google.com" :footer)
+        ; equivalent
+        ($ "http://news.ycombinator.com" (search "tr")  (search "a"))
+        ($ "http://news.ycombinator.com" "tr" "a")
+        ($ "http://news.ycombinator.com" tr a)
+         
+        ; equivalent
+        ($ "http://www.google.com" (search "#footer"))
+        ($ "http://www.google.com" "#footer")
+        ($ "http://www.google.com" :footer)
 
 - Mixing any function in the chain of selectors
 
-    ($ "http://news.ycombinator.com" td a
-       (filter (fn [e] (.startsWith (attr "href" e) "http")))
-       (map (fn [e] {(attr "href" e) (text e)})))
+        ($ "http://news.ycombinator.com" td a
+           (filter (fn [e] (.startsWith (attr "href" e) "http")))
+           (map (fn [e] {(attr "href" e) (text e)})))
      
-    ;; returns a map with uri -> title
+        ;; returns a map with uri -> title
 
 - Manipulating the wrapped set adding elements from the same document
   or a different document
 
-    ($ "<ul><li>item 1</li><li>item 2</li></ul><p>a paragraph</p>" li (add ($ "<a>hey</a>" a)) (add p) (text))
-    ; gets " item 1 item 2 hey a paragraph"
+        ($ "<ul><li>item 1</li><li>item 2</li></ul><p>a paragraph</p>" li (add ($ "<a>hey</a>" a)) (add p) (text))
+        ; gets " item 1 item 2 hey a paragraph"
 
 - Transforming an element into a set of S-Expressions
 
-    ($ "<div><div class='test other'>hola</div><ul><li>uno</li><li id='two'>dos</li></ul></div>" div (s-expressions))
-
-    ; outputs
-    ([:div {}
-      [[:divother.test {:class "test other"} "hola"]
-       [:ul {}
-         [[:li {} "uno"]
-          [:li#two {:id "two"} "dos"]]]]]
-     [:div.other.test {:class "test other"} "hola"])
+        ($ "<div><div class='test other'>hola</div><ul><li>uno</li><li id='two'>dos</li></ul></div>" div (s-expressions))
+         
+        ; outputs
+        ([:div {}
+          [[:divother.test {:class "test other"} "hola"]
+           [:ul {}
+             [[:li {} "uno"]
+              [:li#two {:id "two"} "dos"]]]]]
+         [:div.other.test {:class "test other"} "hola"])
 
 ## Installation
 
