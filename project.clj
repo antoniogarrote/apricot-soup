@@ -1,4 +1,4 @@
-(defproject apricot-soup "0.0.2-SNAPSHOT"
+(defproject apricot-soup "0.0.3-SNAPSHOT"
   :description "HTML parsing, querying and manipulation"
   :dependencies [[org.clojure/clojure "1.2.0"]
                  [org.clojure/clojure-contrib "1.2.0"]
